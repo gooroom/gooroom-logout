@@ -1,0 +1,21 @@
+Source: gooroom-logout
+Section: utils
+Priority: optional
+Maintainer: Gooroom Maintainers <gooroom@gooroom.kr>
+Build-Depends: automake (>= 1.13),
+               debhelper (>= 10),
+               gnome-pkg-tools (>= 0.17),
+               gnome-common (>=3.18.0),
+               intltool (>= 0.35.0),
+               libglib2.0-dev,
+               libgtk-3-dev,
+               libx11-dev
+Standards-Version: 3.9.8
+Homepage: http://www.gooroom.kr
+Vcs-Git: https://github.com/gooroom/gooroom-logout.git
+Vcs-Browser: https://github.com/gooroom/gooroom-logout
+
+Package: gooroom-logout
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Utility to help you end user session
