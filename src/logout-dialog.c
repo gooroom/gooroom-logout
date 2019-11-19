@@ -282,48 +282,6 @@ is_function_available (const char *function)
 }
 
 static gboolean
-do_logout (void)
-{
-	gboolean ret = FALSE;
-	GDBusProxy *proxy = NULL;
-	GError *error = NULL;
-	GVariant *parameters = NULL;
-
-	parameters = g_variant_new ("(u)", LOGOUT_NO_CONFIRMATION);
-
-	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-			G_DBUS_PROXY_FLAGS_NONE,
-			NULL, 
-			"org.gnome.SessionManager",
-			"/org/gnome/SessionManager",
-			"org.gnome.SessionManager",
-			NULL,
-			NULL);
-
-	g_dbus_proxy_call_sync (proxy,
-			"Logout",
-			parameters,
-			G_DBUS_CALL_FLAGS_NONE,
-			-1,
-			NULL,
-			&error);
-
-	if (error) {
-		g_warning ("Failed to call logout: %s", error->message);
-		g_error_free (error);
-		ret = FALSE;
-	}
-
-	ret = TRUE;
-	if (parameters)
-		g_variant_unref (parameters);
-
-	g_clear_object (&proxy);
-
-	return ret;
-}
-
-static gboolean
 end_session (const gchar *function)
 {
 	if (!g_str_equal (function, "reboot") &&
@@ -335,9 +293,9 @@ end_session (const gchar *function)
 
 	gboolean ret = TRUE;
 	GError *error = NULL;
-	gchar *cmd = g_find_program_in_path ("systemctl");
-    if (cmd) {
-		gchar *cmdline = g_strdup_printf ("systemd-run %s %s", cmd, function);
+	gchar *pkexec = g_find_program_in_path ("pkexec");
+    if (pkexec) {
+		gchar *cmdline = g_strdup_printf ("%s /bin/systemctl %s", pkexec, function);
 		g_spawn_command_line_async (cmdline, &error);
 		if (error) {
 			g_warning ("Failed to execute function: %s", error->message);
@@ -346,7 +304,7 @@ end_session (const gchar *function)
 		}
 		g_free (cmdline);
     }
-    g_free (cmd);
+    g_free (pkexec);
 
 	return ret;
 
@@ -391,7 +349,7 @@ end_session (const gchar *function)
 static gboolean
 do_logout_idle (gpointer data)
 {
-	g_spawn_command_line_async ("systemd-run systemctl restart lightdm.service", NULL);
+	g_spawn_command_line_async ("/usr/bin/gnome-session-quit --force", NULL);
 
 	return FALSE;
 }
