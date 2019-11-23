@@ -282,9 +282,10 @@ is_function_available (const char *function)
 }
 
 static gboolean
-end_session (const gchar *function)
+do_endsession (const gchar *function)
 {
-	if (!g_str_equal (function, "reboot") &&
+	if (!g_str_equal (function, "logout") &&
+	    !g_str_equal (function, "reboot") &&
         !g_str_equal (function, "suspend") &&
         !g_str_equal (function, "poweroff") &&
         !g_str_equal (function, "hibernate")) {
@@ -293,9 +294,9 @@ end_session (const gchar *function)
 
 	gboolean ret = TRUE;
 	GError *error = NULL;
-	gchar *pkexec = g_find_program_in_path ("pkexec");
-    if (pkexec) {
-		gchar *cmdline = g_strdup_printf ("%s /bin/systemctl %s", pkexec, function);
+	gchar *cmd = g_find_program_in_path ("gooroom-logout-command");
+	if (cmd) {
+		gchar *cmdline = g_strdup_printf ("%s --%s --delay=300", cmd, function);
 		g_spawn_command_line_async (cmdline, &error);
 		if (error) {
 			g_warning ("Failed to execute function: %s", error->message);
@@ -303,55 +304,10 @@ end_session (const gchar *function)
 			ret = FALSE;
 		}
 		g_free (cmdline);
-    }
-    g_free (pkexec);
+	}
+	g_free (cmd);
 
 	return ret;
-
-#if 0
-	if (!g_str_equal (function, "PowerOff") &&
-        !g_str_equal (function, "Reboot") &&
-        !g_str_equal (function, "Hibernate") &&
-        !g_str_equal (function, "Suspend")) {
-		return FALSE;
-	}
-
-	GDBusProxy *proxy = login1_proxy_get ();
-	if (proxy) {
-		GError *error = NULL;
-		GVariant *parameters = NULL;
-
-		parameters = g_variant_new ("(b)", FALSE);
-
-		g_dbus_proxy_call_sync (proxy,
-				function,
-				parameters,
-				G_DBUS_CALL_FLAGS_NONE,
-				-1,
-				NULL,
-				&error);
-
-		if (error) {
-			g_warning ("Failed to call %s: %s", function, error->message);
-			g_error_free (error);
-		}
-
-		if (parameters)
-			g_variant_unref (parameters);
-
-		g_clear_object (&proxy);
-	}
-
-	return TRUE;
-#endif
-}
-
-static gboolean
-do_logout_idle (gpointer data)
-{
-	g_spawn_command_line_async ("/usr/bin/gnome-session-quit --force", NULL);
-
-	return FALSE;
 }
 
 static void
@@ -360,53 +316,42 @@ on_system_command_button_clicked (GtkWidget *button, gpointer data)
 	LogoutDialog *dialog = LOGOUT_DIALOG (data);
 	LogoutDialogPrivate *priv = dialog->priv;
 
+	const gchar *function;
 	gint id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "id"));
 
 	switch (id)
 	{
 		case SYSTEM_LOGOUT:
-		{
-			do_logout_idle (NULL);
-			gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+			function = "logout";
 			break;
-		}
 
 		case SYSTEM_SUSPEND:
-		{
-			if (end_session ("suspend"))
-				gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+			function = "suspend";
 			break;
-		}
 
 		case SYSTEM_HIBERNATE:
-		{
-			if (end_session ("hibernate"))
-				gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+			function = "hibernate";
 			break;
-		}
 
 		case SYSTEM_RESTART:
-		{
-			if (end_session ("reboot"))
-				gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+			function = "reboot";
 			break;
-		}
 
 		case SYSTEM_SHUTDOWN:
-		{
-			if (end_session ("poweroff"))
-				gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+			function = "poweroff";
 			break;
-		}
 
 		case SYSTEM_CANCEL:
-		{
 			gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-			break;
-		}
+			return;
 
 		default:
 			return;
+	}
+
+	if (function) {
+		if (do_endsession (function))
+			gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 	}
 }
 

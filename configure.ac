@@ -54,6 +54,7 @@ dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.20.0)
+PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.54.1)
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.44.0)
 PKG_CHECK_MODULES(X11, x11 >= 1.6.7)
 

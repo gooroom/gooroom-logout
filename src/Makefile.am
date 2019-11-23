@@ -4,7 +4,7 @@ AM_CPPFLAGS = \
 	-DDATADIR=\"$(datadir)\"    \
 	$(PLATFORM_CPPFLAGS)
 
-bin_PROGRAMS = gooroom-logout
+bin_PROGRAMS = gooroom-logout gooroom-logout-command
 
 BUILT_SOURCES = \
 	logout-dialog-resources.c \
@@ -19,14 +19,8 @@ gooroom_logout_SOURCES = \
 gooroom_logout_CFLAGS = \
 	$(X11_CFLAGS) \
 	$(GTK_CFLAGS) \
-	$(GLIBS_CFLAGS)	\
+	$(GLIB_CFLAGS)	\
 	$(PLATFORM_CFLAGS)
-
-#	-Wall \
-#	-Wl,-z,defs \
-#	-Wl,--as-needed
-#	-Wl,-Bsymbolic-functions \
-#	-Werror -Wno-error=deprecated-declarations
 
 gooroom_logout_LDADD = \
 	$(X11_LIBS) \
@@ -34,6 +28,24 @@ gooroom_logout_LDADD = \
 	$(GLIB_LIBS)
 
 gooroom_logout_LDFLAGS = \
+	-no-undefined \
+	$(PLATFORM_LDFLAGS)
+
+
+
+gooroom_logout_command_SOURCES = \
+	gooroom-logout-command.c
+
+gooroom_logout_command_CFLAGS = \
+	$(GIO_CFLAGS)	\
+	$(GLIB_CFLAGS)	\
+	$(PLATFORM_CFLAGS)
+
+gooroom_logout_command_LDADD = \
+	$(GIO_LIBS)	\
+	$(GLIB_LIBS)
+
+gooroom_logout_command_LDFLAGS = \
 	-no-undefined \
 	$(PLATFORM_LDFLAGS)
 
