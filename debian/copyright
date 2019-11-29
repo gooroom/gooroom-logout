@@ -1,16 +1,16 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: http://git.gooroom.kr/gooroom-logout
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Source: https://github.com/gooroom/gooroom-logout
 
 Files: *
 Copyright: Copyright (c) 2004-2006 Benedikt Meurer <benny@xfce.org>
            Copyright (c) 2011      Nick Schermer <nick@xfce.org>
-           Copyright (c) 2015-2019 Gooroom <gooroom@gooroom.kr>
+           Copyright (c) 2018-2019 Gooroom <gooroom@gooroom.kr>
 License: GPL-2+
 
 Files: src/gooroom-logout-command.c
 Copyright: Copyright (C) 1998 Tom Tromey
            Copyright (C) 2008 Red Hat, Inc.
-           Copyright (c) 2015-2019 Gooroom <gooroom@gooroom.kr>
+           Copyright (c) 2018-2019 Gooroom <gooroom@gooroom.kr>
 License: GPL-2+
 
 
