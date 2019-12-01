@@ -1,3 +1,14 @@
+gooroom-logout (0.1.1+grm2u1) unstable; urgency=medium
+
+  [ cjheo ]
+  * [f6695caf] Changed command for system shutdown, reboot, hibernate and suspend
+  * [f4bbeb9e] Added gooroom-logout-command
+  * [aebcb5b9] Update sources regarding copyright
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sun, 01 Dec 2019 19:06:50 +0900
+
 gooroom-logout (0.1.0+grm2) unstable; urgency=medium
 
   * Initial Release.
