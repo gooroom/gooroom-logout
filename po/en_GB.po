@@ -1,0 +1,65 @@
+# English(United Kingdom) translations for gooroom-logout package.
+# Copyright (C) 2018-2019 THE gooroom-logout'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gooroom-logout package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gooroom-logout 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-08 01:53+0900\n"
+"PO-Revision-Date: 2019-01-08 01:53+0900\n"
+"Language-Team: Gooroom <gooroom@gooroom.kr>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../src/logout-dialog.c:75
+msgid "_Log Out"
+msgstr "Log Out(_L)"
+
+#: ../src/logout-dialog.c:77
+msgid "Close all programs and log out."
+msgstr "Close all programs and log out."
+
+#: ../src/logout-dialog.c:81
+msgid "_Hibernate"
+msgstr "Hibernate(_H)"
+
+#: ../src/logout-dialog.c:83
+msgid "Save user sessions in memory and put the computer into sleep state."
+msgstr "Save user sessions in memory and put the computer into sleep state."
+
+#: ../src/logout-dialog.c:87
+msgid "Sus_pend"
+msgstr "Suspend(_P)"
+
+#: ../src/logout-dialog.c:89
+msgid "Save user sessions in hard disk and turn off the computer."
+msgstr "Save user sessions in hard disk and turn off the computer."
+
+#: ../src/logout-dialog.c:93
+msgid "_Restart"
+msgstr "Restart(_R)"
+
+#: ../src/logout-dialog.c:95
+msgid "Shut down and automatically restart the computer?"
+msgstr "Shut down and automatically restart the computer?"
+
+#: ../src/logout-dialog.c:99
+msgid "Shut _Down"
+msgstr "Shut Down(_D)"
+
+#: ../src/logout-dialog.c:101
+msgid "Close all programs and turn off the computer."
+msgstr "Close all programs and turn off the computer."
+
+#: ../src/logout-dialog.c:105
+msgid "_Cancel"
+msgstr "Cancel(_C)"
+
+#: ../src/logout-dialog.c:107
+msgid "Close this dialog."
+msgstr "Close this dialog."
