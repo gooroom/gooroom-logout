@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-	<gresource prefix="/kr/gooroom/logout">
-		<file preprocess="xml-stripblanks">logout-dialog.ui</file>
-	</gresource>
-
-	<gresource prefix="/kr/gooroom/logout">
-		<file compressed="true" alias="theme.css">../data/theme.css</file>
-	</gresource>
-
-	<gresource prefix="/kr/gooroom/logout">
-		<file alias="logo.svg">../data/logo.svg</file>
-	</gresource>
-</gresources>
+        <gresource prefix="/kr/gooroom/logout">
+                <file preprocess="xml-stripblanks">logout-dialog.ui</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file compressed="true" alias="theme.css">../data/theme.css</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="cancel.svg">../data/ic-control-tower-cancel.svg</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="power-rest.svg">../data/ic-control-tower-power-rest.svg</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="restart-rest.svg">../data/ic-control-tower-restart-rest.svg</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="sleep-rest.svg">../data/ic-control-tower-sleep-rest.svg</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="hibernate-rest.svg">../data/ic-control-tower-hibernate-rest.svg</file>
+        </gresource>
+ 
+        <gresource prefix="/kr/gooroom/logout">
+                <file alias="logout-rest.svg">../data/ic-control-tower-logout-rest.svg</file>
+        </gresource>
+ </gresources>
