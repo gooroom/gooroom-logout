@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <template class="LogoutDialog" parent="GtkDialog">
     <property name="name">logout-dialog</property>
-    <property name="can_focus">False</property>
-    <property name="window_position">center-always</property>
-    <property name="default_width">320</property>
-    <property name="type_hint">dialog</property>
-    <child>
-      <placeholder/>
-    </child>
+    <property name="can-focus">False</property>
+    <property name="window-position">center-always</property>
+    <property name="default-width">320</property>
+    <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox">
-        <property name="can_focus">False</property>
+        <property name="name">top_box</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
             <child>
               <placeholder/>
             </child>
@@ -31,36 +29,25 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="name">logout-dialog-logo</property>
+            <property name="name">inner_box</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkImage" id="img_logo">
+              <object class="GtkBox" id="box_button">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">gtk-missing-image</property>
-                <property name="icon_size">6</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="box_button">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>

@@ -1,5 +1,5 @@
 # English(United Kingdom) translations for gooroom-logout package.
-# Copyright (C) 2018-2019 THE gooroom-logout'S COPYRIGHT HOLDER
+# Copyright (C) 2018-2021 THE gooroom-logout'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gooroom-logout package.
 #
 #, fuzzy

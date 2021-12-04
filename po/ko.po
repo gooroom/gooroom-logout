@@ -1,5 +1,5 @@
 # Korean translations for gooroom-logout package.
-# Copyright (C) 2018-2019 THE gooroom-logout'S COPYRIGHT HOLDER
+# Copyright (C) 2018-2021 THE gooroom-logout'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gooroom-logout package.
 #
 #, fuzzy
@@ -26,7 +26,7 @@ msgstr "모든 프로그램을 닫고 로그아웃 합니다."
 
 #: ../src/logout-dialog.c:81
 msgid "_Hibernate"
-msgstr "최대절전(_H)"
+msgstr "최대 절전(_H)"
 
 #: ../src/logout-dialog.c:83
 msgid "Save user sessions in memory and put the computer into sleep state."

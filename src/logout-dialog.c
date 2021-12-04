@@ -1,7 +1,7 @@
 /* 
  * Copyright (c) 2004-2006 Benedikt Meurer <benny@xfce.org>
  * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
- * Copyright (C) 2018-2019 Gooroom <gooroom@gooroom.kr>
+ * Copyright (C) 2018-2021 Gooroom <gooroom@gooroom.kr>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -46,7 +46,6 @@ struct _LogoutDialogClass {
 };
 
 struct _LogoutDialogPrivate {
-	GtkWidget *img_logo;
 	GtkWidget *box_button;
 };
 
@@ -73,37 +72,37 @@ static const struct {
 } DATA[] = {
 	{ SYSTEM_LOGOUT,
       N_("_Log Out"),
-      "system-log-out-symbolic",
+      "/kr/gooroom/logout/logout-rest.svg",
       N_("Close all programs and log out.")
 	},
 
 	{ SYSTEM_HIBERNATE,
       N_("_Hibernate"),
-      "system-hibernate-symbolic",
+      "/kr/gooroom/logout/hibernate-rest.svg",
       N_("Save user sessions in memory and put the computer into sleep state.")
 	},
 
 	{ SYSTEM_SUSPEND,
       N_("Sus_pend"),
-      "system-suspend-symbolic",
+      "/kr/gooroom/logout/sleep-rest.svg",
       N_("Save user sessions in hard disk and turn off the computer.")
 	},
 
 	{ SYSTEM_RESTART,
       N_("_Restart"),
-      "system-restart-symbolic",
+      "/kr/gooroom/logout/restart-rest.svg",
       N_("Shut down and automatically restart the computer?")
 	},
 
 	{ SYSTEM_SHUTDOWN,
       N_("Shut _Down"),
-      "system-shutdown-symbolic",
+      "/kr/gooroom/logout/power-rest.svg",
       N_("Close all programs and turn off the computer.")
 	},
 
 	{ SYSTEM_CANCEL,
       N_("_Cancel"),
-      "application-exit-symbolic",
+      "/kr/gooroom/logout/cancel.svg",
       N_("Close this dialog.")
 	},
 
@@ -133,6 +132,7 @@ x11_fadeout_new_window (GdkDisplay *display, GdkScreen *screen)
 	gulong                mask = 0;
 	gulong                opacity;
 	gboolean              composited;
+  	XVisualInfo           vinfo;
 
 	xdisplay = gdk_x11_display_get_xdisplay (display);
 	root = gdk_screen_get_root_window (screen);
@@ -150,18 +150,22 @@ x11_fadeout_new_window (GdkDisplay *display, GdkScreen *screen)
 		root_pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, width, height);
 	}
 
+   	XMatchVisualInfo(xdisplay, DefaultScreen(xdisplay), 32, TrueColor, &vinfo);
+    
+   	attr.colormap = XCreateColormap(xdisplay, DefaultRootWindow(xdisplay), vinfo.visual, AllocNone);
+   	mask |= CWColormap;
 	attr.cursor = gdk_x11_cursor_get_xcursor (cursor);
 	mask |= CWCursor;
-
+   	attr.border_pixel = 0;
+   	mask |= CWBorderPixel;
+   	attr.background_pixel = 0x64000000;
+	mask |= CWBackPixel;
 	attr.override_redirect = TRUE;
 	mask |= CWOverrideRedirect;
 
-	attr.background_pixel = BlackPixel (xdisplay, gdk_x11_screen_get_screen_number (screen));
-	mask |= CWBackPixel;
-
 	xwindow = XCreateWindow (xdisplay, gdk_x11_window_get_xid (root),
-			0, 0, width, height, 0, CopyFromParent,
-			InputOutput, CopyFromParent, mask, &attr);
+			0, 0, width, height, 0, vinfo.depth,
+			InputOutput, vinfo.visual, mask, &attr);
 
 	g_object_unref (cursor);
 
@@ -372,12 +376,6 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	gtk_widget_hide (gtk_dialog_get_action_area (GTK_DIALOG (dialog)));
 G_GNUC_END_IGNORE_DEPRECATIONS
 
-	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource_at_scale ("/kr/gooroom/logout/logo.svg", 160, -1, TRUE, NULL);
-	if (pixbuf) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (priv->img_logo), pixbuf);
-		g_object_unref (pixbuf);
-	}
-
 	gint i;
 	for (i = 0; DATA[i].id != -1; i++ ) {
 		GtkWidget *button = NULL;
@@ -398,27 +396,25 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 		}
 		if (!button) continue;
 
+		gtk_widget_set_name (button, "logout-dialog-button");
 		gtk_widget_set_can_focus (button, FALSE);
 		gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-		if (DATA[i].id == SYSTEM_CANCEL) {
-			gtk_widget_set_name (button, "logout-dialog-button-last");
-		} else {
-			gtk_widget_set_name (button, "logout-dialog-button");
-		}
 		g_object_set_data (G_OBJECT (button), "id", GINT_TO_POINTER (DATA[i].id));
 		gtk_box_pack_start (GTK_BOX (priv->box_button), button, TRUE, FALSE, 0);
 
-		GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-		gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+		GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 20);
 		gtk_container_add (GTK_CONTAINER (button), hbox);
 
-		GtkWidget *icon = gtk_image_new_from_icon_name (DATA[i].icon_name, GTK_ICON_SIZE_BUTTON);
-		gtk_image_set_pixel_size (GTK_IMAGE (icon), 32);
+		GtkWidget *icon = gtk_image_new_from_resource (DATA[i].icon_name);
 		gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
 
-		GtkWidget *label = gtk_label_new_with_mnemonic (_(DATA[i].label));
-		gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+		if (DATA[i].id != SYSTEM_CANCEL) {
+			GtkWidget *label = gtk_label_new_with_mnemonic (_(DATA[i].label));
+			gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+		}
+		else {
+			gtk_widget_set_halign(hbox, GTK_ALIGN_CENTER);
+		}
 
 		gtk_widget_show_all (button);
 
@@ -433,7 +429,6 @@ logout_dialog_class_init (LogoutDialogClass *class)
 	gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
 			"/kr/gooroom/logout/logout-dialog.ui");
 
-	gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), LogoutDialog, img_logo);
 	gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), LogoutDialog, box_button);
 }
 

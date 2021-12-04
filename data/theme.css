@@ -1,68 +1,36 @@
-* {
-	text-shadow: none;
-	transition: none;
-	-gtk-icon-effect: none;
-	-gtk-icon-shadow: none; }
-
-#transparent-window {
-	background-image: none;
-    background-color: rgba (0, 0, 0, 0.0); }
-
 #logout-dialog {
-	border-radius: 12px; }
-
-#logout-dialog-logo {
-	padding: 20px;
-	color: #CFD8DC;
-	border-radius: 8px 8px 0 0;
-	background-image: none;
-    background-color: #2b2e37; }
-
-#logout-dialog-button,
-#logout-dialog-button-last {
-	padding: 10px;
-	animation: none;
-	border-radius: 0;
-	border: none;
-	box-shadow: none;
+	background-color: transparent;
 }
-
-#logout-dialog-button.flat {
-	color: #2b2e37;
-	background-image: none;
-	background-color: #ffffff; }
-
-#logout-dialog-button:hover,
-#logout-dialog-button.flat:hover {
-	color: #CFD8DC;
-	background-color:transparent;
-	background-image: -gtk-gradient(radial,center center, 0, center center, 1, from(rgba(47, 61, 68, 0.5)), to(rgba(47, 61, 68, 0.99))); }
+#logout-dialog > box {
+	min-width: 310px;
+    padding: 5px;
+	border-radius: 16px; 
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+#inner_box {
+    min-width: 300px;
+    padding: 20px 10px 15px 10px;
+    border-radius: 12px;
+	background-color: #e6e9f0;
+}
+#logout-dialog-button {
+	min-width: 280px;
+	min-height: 34px;
+	border-radius: 10px;
+	background-color: #e6e9f0;
+    border: none;
+}
+#logout-dialog-button label {
+	font-size: 13px;
+	color: #000100;
+	font-weight: normal;
+}
+#logout-dialog-button:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
 
 #logout-dialog-button:active,
-#logout-dialog-button:checked, 
-#logout-dialog-button.flat:active,
-#logout-dialog-button.flat:checked  {
-	color: #00B3FE;
-	background-color:transparent;
-	background-image: -gtk-gradient(radial,center center, 0, center center, 1, from(alpha(@theme_selected_bg_color, 0.1)), to(alpha(@theme_selected_bg_color, 0.7))); }
-
-#logout-dialog-button-last.flat {
-	color: #CFD8DC;
-	border-radius: 0 0 8px 8px;
-	background-image: none;
-	background-color: #2b2e37;
+#logout-dialog-button:checked { 
+	background-color: rgba(0, 0, 0, 0.2);
 }
-
-#logout-dialog-button-last:hover,
-#logout-dialog-button-last.flat:hover {
-	color: #CFD8DC;
-	background-color: #CFD8DC;
-	background-image: -gtk-gradient(radial,center center, 0, center center, 1, from(rgba(47, 61, 68, 0.5)), to(rgba(47, 61, 68, 0.99))); }
-
-#logout-dialog-button-last:active,
-#logout-dialog-button-last:checked, 
-#logout-dialog-button-last.flat:active,
-#logout-dialog-button-last.flat:checked  {
-	color: #00B3FE;
-	background-color: #CFD8DC;
-	background-image: -gtk-gradient(radial,center center, 0, center center, 1, from(alpha(@theme_selected_bg_color, 0.1)), to(alpha(@theme_selected_bg_color, 0.7))); }
